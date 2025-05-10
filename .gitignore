@@ -1,0 +1,22 @@
+# Test code
+testing.ipynb
+
+# __pycache__ 디렉토리 및 .pyc 파일
+__pycache__/
+*.pyc
+
+# 환경 변수 파일
+loginInfo.env
+
+# Jupyter notebook 체크포인트
+.ipynb_checkpoints/
+
+# VSCode 설정
+.vscode/
+
+# macOS 시스템 파일
+.DS_Store
+
+# 테스트 결과 파일, 로그 파일
+*.log
+*.tmp

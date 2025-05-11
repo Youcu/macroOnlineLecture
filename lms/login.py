@@ -11,7 +11,7 @@ def login(driver, ID, PW):
 
     # 로그인 성공 여부 판단
     if "login" in driver.current_url.lower():
-        print("❌ 로그인 실패! 현재 URL:", driver.current_url)
+        print("❌ 로그인 실패!")
     else:
-        print("✅ 로그인 성공! 현재 URL:", driver.current_url)
+        print("✅ 로그인 성공!")
     return driver.current_url

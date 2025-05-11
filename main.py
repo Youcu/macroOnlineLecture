@@ -9,6 +9,7 @@ from lms.lecture import (
     select_valid_lecture
 )
 
+from lms.lecture_handler import handle_attendance
 import time
 
 ##### Variables #####
@@ -24,23 +25,21 @@ if __name__ == "__main__":
     driver = get_driver(user_agent, 'head_less')
     driver.implicitly_wait(10)
     driver.get(base_url)
-
     home_link = login(driver, ID, PW)
+
     subject_list = get_subject_link_list(driver, subject_count)
     dict_lecture_week_link, subject_name_lst = dict_lecture_subject_name_lst(driver, subject_list, home_link)
+    valid_lecture_idx = select_valid_lecture(dict_lecture_week_link, subject_name_lst)
 
-    select_valid_lecture(dict_lecture_week_link, subject_name_lst)
     driver.quit()
-
-    select_option = int(input("\n\n>> Select Lecture Number : "))
 
     # Setup driver for watching lectures
     driver = get_driver(user_agent, 'head_less')
     driver.implicitly_wait(10)
     driver.get(base_url)
-    login(driver, ID, PW)
+    home_link =login(driver, ID, PW)
 
-    taking_attendance(driver, select_option, subject_list, dict_lecture_week_link)
+    handle_attendance(driver, subject_list, subject_name_lst, dict_lecture_week_link, valid_lecture_idx)
     time.sleep(5)
     print("\nComplete!\n")
     driver.quit()

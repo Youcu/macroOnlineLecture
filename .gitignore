@@ -20,3 +20,6 @@ loginInfo.env
 # 테스트 결과 파일, 로그 파일
 *.log
 *.tmp
+
+# 발견한 예외 케이스들 기록 파일
+exceptions.txt

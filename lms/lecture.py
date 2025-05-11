@@ -39,13 +39,10 @@ def dict_lecture_subject_name_lst(driver, subject_list, home_link):
     return dict_lecture_week_link, subject_name_lst
 
 def taking_attendance(driver, select_option, subject_list, dict_lecture_week_link):
-    print(f"\n\n{subject_list}\n\n")
     driver.execute_script(subject_list[select_option])
     for lecture in dict_lecture_week_link[select_option]:
-        print(f"\n\n{lecture}\n\n")
         driver.get(lecture)
         lect_items = driver.find_elements(By.CSS_SELECTOR, '.site-mouseover-color')
-        print(f"\n\n{lect_items}\n\n")
         lect_time = [
             lect_time_to_sec(t.text.strip(), 'end')
             for t in driver.find_elements(By.CSS_SELECTOR, "div[style='float: left;margin-left: 7px;margin-top:3px;']")

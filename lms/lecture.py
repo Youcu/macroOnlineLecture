@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from lms.utils import lect_time_to_sec
 import time
 import re
+from tqdm import tqdm
 
 def get_subject_link_list(driver, subject_count):
     subjects = driver.find_elements(By.CSS_SELECTOR, ".sub_open")
@@ -15,7 +16,7 @@ def get_subject_link_list(driver, subject_count):
 def dict_lecture_subject_name_lst(driver, subject_list, home_link):
     dict_lecture_week_link = [[] for _ in range(len(subject_list))]
     subject_name_lst = []
-    for i in range(len(subject_list)):
+    for i in tqdm(range(len(subject_list)), desc="🟠 Parsing Subject Name List"):
         driver.execute_script(subject_list[i])
         subject_name = driver.find_element(By.CSS_SELECTOR, '.welcome_subject').text
         subject_name_lst.append(subject_name)
@@ -48,7 +49,8 @@ def taking_attendance(driver, select_option, subject_list, dict_lecture_week_lin
             for t in driver.find_elements(By.CSS_SELECTOR, "div[style='float: left;margin-left: 7px;margin-top:3px;']")
         ]
 
-        for i in range(len(lect_items)):
+        # 추후 여기에 강의명까지 달아주자 
+        for i in tqdm(range(len(lect_items)), desc="Attend a part of lectures"): 
             lect_items = driver.find_elements(By.CSS_SELECTOR, '.site-mouseover-color')
             try:
                 lect_items[i].click()
@@ -66,7 +68,7 @@ def taking_attendance(driver, select_option, subject_list, dict_lecture_week_lin
 
 def select_valid_lecture(dict_lecture_week_link, subject_name_lst):
     valid_lecture_idx = [i for i, lst in enumerate(dict_lecture_week_link) if lst]
-    print("<< Incomplete Online Lecture List >>\n")
+    print("\n\n<< Incomplete Online Lecture List >>\n")
     for i in valid_lecture_idx:
         print(f"   {i}. {subject_name_lst[i]}")
     return valid_lecture_idx

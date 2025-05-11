@@ -8,6 +8,7 @@ def get_driver(user_agent, mode):
     options.add_argument(f"user-agent={user_agent}")
     options.add_experimental_option("detach", True)
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_argument("--disable-blink-features=AutomationControlled") 
     options.add_argument("--mute-audio")
 
     if mode == "head_less":

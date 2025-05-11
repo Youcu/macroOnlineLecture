@@ -6,6 +6,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from bs4 import BeautifulSoup
 from lms.utils import lect_time_to_sec
 import time
+import re
 
 def get_subject_link_list(driver, subject_count):
     subjects = driver.find_elements(By.CSS_SELECTOR, ".sub_open")
@@ -28,7 +29,8 @@ def dict_lecture_subject_name_lst(driver, subject_list, home_link):
         incomplete_week_lst = [idx for idx, status in enumerate(soup.select('.wb-status > img')) if 'gray' in status['src']]
         for idx in incomplete_week_lst:
             all_week_lst[idx].click()
-            week_num = driver.find_elements(By.CSS_SELECTOR, '.wb-week')[idx].text[0]
+            text = driver.find_elements(By.CSS_SELECTOR, '.wb-week')[idx].text
+            week_num = int(re.search(r'\d+', text).group())
             link = f"https://lms.mju.ac.kr/ilos/st/course/online_list_form.acl?WEEK_NO={week_num}"
             dict_lecture_week_link[i].append(link)
             driver.back()
@@ -37,10 +39,13 @@ def dict_lecture_subject_name_lst(driver, subject_list, home_link):
     return dict_lecture_week_link, subject_name_lst
 
 def taking_attendance(driver, select_option, subject_list, dict_lecture_week_link):
+    print(f"\n\n{subject_list}\n\n")
     driver.execute_script(subject_list[select_option])
     for lecture in dict_lecture_week_link[select_option]:
+        print(f"\n\n{lecture}\n\n")
         driver.get(lecture)
         lect_items = driver.find_elements(By.CSS_SELECTOR, '.site-mouseover-color')
+        print(f"\n\n{lect_items}\n\n")
         lect_time = [
             lect_time_to_sec(t.text.strip(), 'end')
             for t in driver.find_elements(By.CSS_SELECTOR, "div[style='float: left;margin-left: 7px;margin-top:3px;']")

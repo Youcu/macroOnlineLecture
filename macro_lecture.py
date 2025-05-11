@@ -16,6 +16,7 @@ from bs4 import BeautifulSoup
 # Etc Libraries 
 import time # to prevent problems from delay issue
 import os # to deal with file options
+import re
 
 ##### Variables #####
 
@@ -108,16 +109,19 @@ def dict_lecture_subject_name_lst(driver, subject_list, home_link):
         incomplete_week_lst = [ idx for idx,status in enumerate(soup.select('.wb-status > img'),0) if 'gray' in status['src']] 
     
         if len(incomplete_week_lst) == 0:
-            # print('Already Completed Lectures')
+            print('Already Completed Lectures')
             pass
         else:
             # print(incomplete_week_lst)
             for idx, item in enumerate(all_week_lst, 0):
                 if idx in incomplete_week_lst:
                     item.click()
-                    week_num = driver.find_elements(By.CSS_SELECTOR, '.wb-week')[idx].text[0]
+                    text = driver.find_elements(By.CSS_SELECTOR, '.wb-week')[idx].text
+                    week_num = int(re.search(r'\d+', text).group())
+                    print(driver.find_elements(By.CSS_SELECTOR, '.wb-week')[idx].text)
                     # time.sleep(5)
                     link_format = f"https://lms.mju.ac.kr/ilos/st/course/online_list_form.acl?WEEK_NO={week_num}"            
+                    print(link_format)
                     dict_lecture_week_link[i].append(link_format)
                     driver.back()
         
@@ -151,7 +155,7 @@ driver.quit() # driver 를 종료해도 lst 들은 살아있다.
 select_option = int(input("\n\n>> Select Lecture Number : "))
 
 # Restart Driver
-driver = get_driver(opt, 'browser')
+driver = get_driver(opt, 'head_less')
 driver.implicitly_wait(10)
 driver.get(base_url) # set target
 home_link = login(driver, ID, PW)

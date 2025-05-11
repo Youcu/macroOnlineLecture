@@ -35,7 +35,7 @@ if __name__ == "__main__":
     select_option = int(input("\n\n>> Select Lecture Number : "))
 
     # Setup driver for watching lectures
-    driver = get_driver(user_agent, 'browser')
+    driver = get_driver(user_agent, 'head_less')
     driver.implicitly_wait(10)
     driver.get(base_url)
     login(driver, ID, PW)

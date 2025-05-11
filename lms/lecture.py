@@ -72,6 +72,7 @@ def select_valid_lecture(dict_lecture_week_link, subject_name_lst):
     for i in valid_lecture_idx:
         print(f"   {i}. {subject_name_lst[i]}")
 
+    print("\n")
     if not valid_lecture_idx:
         print("\n✅ 모든 강의가 수강 완료되었습니다.")
     return valid_lecture_idx

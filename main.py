@@ -34,12 +34,6 @@ if __name__ == "__main__":
     driver.quit()
 
     # Setup driver for watching lectures
-    driver = get_driver(user_agent, 'head_less')
-    driver.implicitly_wait(10)
-    driver.get(base_url)
-    home_link =login(driver, ID, PW)
-
-    handle_attendance(driver, subject_list, subject_name_lst, dict_lecture_week_link, valid_lecture_idx)
+    handle_attendance(ID, PW, subject_list, subject_name_lst, dict_lecture_week_link, valid_lecture_idx)
     time.sleep(5)
     print("\nComplete!\n")
-    driver.quit()

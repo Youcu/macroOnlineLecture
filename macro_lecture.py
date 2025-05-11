@@ -6,16 +6,16 @@ from selenium.webdriver.common.by import By # to get resource
 from selenium.webdriver.common.keys import Keys # to use key actions
 from selenium.webdriver import ActionChains # Access item locations
 from selenium.webdriver.chrome.options import Options # for Browser Option
-from selenium.common.exceptions import NoSuchElementException
+# from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 
 # BeautifulSoup Libraries 
-import requests
+# import requests
 from bs4 import BeautifulSoup
 
 # Etc Libraries 
 import time # to prevent problems from delay issue
-import os # to deal with file options
+# import os # to deal with file options
 import re
 
 ##### Variables #####

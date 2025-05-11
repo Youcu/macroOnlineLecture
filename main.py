@@ -1,11 +1,9 @@
-# Path: main.py
 from config.env_loader import load_credentials
 from lms.driver import get_driver
 from lms.login import login
 from lms.lecture import (
     get_subject_link_list,
     dict_lecture_subject_name_lst,
-    taking_attendance,
     select_valid_lecture
 )
 
